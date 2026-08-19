@@ -97,15 +97,19 @@ O Render **não** sobe `docker-compose`. Cada serviço usa o próprio `Dockerfil
 | `confiapix-frontend` | Web Service | `confiapix-frontend/Dockerfile` (nginx) |
 | `confiapix-website` | Static Site | pasta estática |
 
-No dashboard: **New → Blueprint** e aponte para o repositório.
+No dashboard: **New → Blueprint** e aponte para o repositório. O `render.yaml` usa **plano free** (não pede cartão).
+
+Limitações do free:
+- API e painel **hibernam** após 15 min sem tráfego (próximo acesso demora ~1 min).
+- Postgres free **expira em 30 dias** e só pode existir **1** por workspace.
+- 512 MB de RAM: se a API cair com OOM, aí sim precisaria de plano pago.
+- Webhook Stone não é confiável no free (serviço dorme).
 
 Checklist:
-- Plano **Starter** da API pode ficar apertado (512 MB). Se houver OOM, suba para Standard.
 - Confirme que `JWT_SECRET` tem ≥ 32 caracteres.
 - Não rotacione `ENCRYPTION_SECRET` depois de gravar credenciais Stone.
-- Webhook Stone: `https://<confiapix-api>.onrender.com/api/v1/webhooks/stone/pix`
-- Painel: URL do serviço `confiapix-frontend` (o nginx faz proxy; CORS não é necessário).
-- Evite plano que hiberna se for receber webhook da Stone.
+- Se o painel não falar com a API, copie a URL pública do `confiapix-api` para a env `API_UPSTREAM` do frontend.
+- Webhook Stone: `https://confiapix-api.onrender.com/api/v1/webhooks/stone/pix`
 
 Teste local no mesmo formato:
 

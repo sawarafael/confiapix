@@ -1,6 +1,6 @@
 databases:
   - name: confiapix-db
-    plan: basic-256mb
+    plan: free
     postgresMajorVersion: "16"
     databaseName: confiapix
     user: confiapix
@@ -9,7 +9,7 @@ services:
   - type: web
     name: confiapix-api
     runtime: docker
-    plan: starter
+    plan: free
     rootDir: confiapix
     dockerfilePath: ./Dockerfile
     healthCheckPath: /health
@@ -25,23 +25,22 @@ services:
       - key: STONE_SANDBOX
         value: "true"
       - key: STONE_SYNC_JOB_ENABLED
-        value: "true"
+        value: "false"
       - key: JAVA_OPTS
         value: "-XX:MaxRAMPercentage=75.0 -XX:+UseG1GC"
 
   - type: web
     name: confiapix-frontend
     runtime: docker
-    plan: starter
+    plan: free
     rootDir: confiapix-frontend
     dockerfilePath: ./Dockerfile
     healthCheckPath: /health
     envVars:
+      # Serviço free não recebe rede privada; o nginx chama a URL pública da API.
+      # Se o Render adicionar um sufixo na URL, ajuste esta variável no dashboard.
       - key: API_UPSTREAM
-        fromService:
-          name: confiapix-api
-          type: web
-          property: hostport
+        value: https://confiapix-api.onrender.com
 
   - type: web
     name: confiapix-website
