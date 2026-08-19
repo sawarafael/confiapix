@@ -1,0 +1,81 @@
+<div class="shell">
+  <div class="shell__blobs" aria-hidden="true"></div>
+
+  @if (menuOpen()) {
+    <button
+      type="button"
+      class="sidebar-backdrop"
+      aria-label="Fechar menu"
+      (click)="closeMenu()"
+    ></button>
+  }
+
+  <aside class="sidebar" [class.sidebar--open]="menuOpen()">
+    <div class="sidebar__brand">
+      <img class="sidebar__logo" src="logo.png" alt="ConfiaPix" width="40" height="40" />
+      <span class="sidebar__name">ConfiaPix</span>
+      <button type="button" class="sidebar__close" aria-label="Fechar menu" (click)="closeMenu()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <nav class="sidebar__nav">
+      @for (item of visibleNavItems(); track item.route) {
+        <a
+          class="sidebar__link"
+          [routerLink]="item.route"
+          routerLinkActive="sidebar__link--active"
+          (click)="closeMenu()"
+        >
+          <span class="material-symbols-outlined">{{ item.icon }}</span>
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar__footer">
+      <label class="theme-toggle">
+        <span class="theme-toggle__leading">
+          <span class="material-symbols-outlined theme-toggle__icon">{{
+            darkMode() ? 'light_mode' : 'dark_mode'
+          }}</span>
+          <span class="theme-toggle__text">{{ darkMode() ? 'Modo claro' : 'Modo escuro' }}</span>
+        </span>
+        <input
+          type="checkbox"
+          class="theme-toggle__input"
+          [checked]="darkMode()"
+          (change)="toggleTheme()"
+        />
+        <span class="theme-toggle__switch" aria-hidden="true">
+          <span class="theme-toggle__knob"></span>
+        </span>
+      </label>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar-container">
+      <header class="topbar">
+        <div class="topbar__start">
+          <button type="button" class="icon-btn menu-btn" aria-label="Abrir menu" (click)="toggleMenu()">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <h1 class="topbar__title">Painel</h1>
+        </div>
+        <div class="topbar__actions">
+          <app-notifications-menu />
+          <app-profile-menu />
+        </div>
+      </header>
+    </div>
+
+    <main class="content">
+      <div class="content__inner">
+        <div class="route-outlet page-content-transition">
+          <router-outlet />
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

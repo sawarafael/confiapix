@@ -1,0 +1,112 @@
+<section class="page">
+  <div class="page__header">
+    <div>
+      <a routerLink="/pix" class="back-link">← Voltar para PIX</a>
+      <h2>Detalhe do PIX</h2>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="muted">Carregando detalhes...</p>
+  } @else if (error()) {
+    <div class="alert">{{ error() }}</div>
+  } @else if (pix(); as item) {
+    <div class="detail-grid">
+      <article class="card detail-hero">
+        <div class="detail-hero__top">
+          <div>
+            <p class="detail-hero__label">Valor recebido</p>
+            <p class="detail-hero__amount">R$ {{ item.amount | number: '1.2-2' }}</p>
+          </div>
+          <div class="detail-hero__badges">
+            @if (item.status) {
+              <span [class]="statusClass(item.status)">{{ formatStoneStatus(item.status) }}</span>
+            }
+            <span class="badge">{{ formatSource(item.source) }}</span>
+          </div>
+        </div>
+        <p class="detail-hero__date">
+          Liquidado em {{ item.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Identificadores</h3>
+        <dl class="detail-list">
+          <div><dt>TXID</dt><dd class="mono">{{ item.txid }}</dd></div>
+          <div><dt>End-to-End ID</dt><dd class="mono">{{ item.endToEndId ?? '—' }}</dd></div>
+          <div><dt>ID Stone</dt><dd class="mono">{{ item.stonePaymentId ?? '—' }}</dd></div>
+          <div><dt>Conta Stone</dt><dd>{{ item.stoneAccountId ?? '—' }}</dd></div>
+        </dl>
+      </article>
+
+      <article class="card">
+        <h3>Pagador</h3>
+        <dl class="detail-list">
+          <div><dt>Nome</dt><dd>{{ item.payer?.name ?? item.payerName ?? '—' }}</dd></div>
+          <div><dt>Documento</dt><dd class="mono">{{ item.payer?.document ?? item.payerDocument ?? '—' }}</dd></div>
+          <div><dt>Tipo</dt><dd>{{ formatDocumentType(item.payer?.documentType) }}</dd></div>
+        </dl>
+      </article>
+
+      @if (item.receiver) {
+        <article class="card">
+          <h3>Recebedor</h3>
+          <dl class="detail-list">
+            <div><dt>Nome</dt><dd>{{ item.receiver.name ?? '—' }}</dd></div>
+            <div><dt>Documento</dt><dd class="mono">{{ item.receiver.document ?? '—' }}</dd></div>
+            <div><dt>Tipo</dt><dd>{{ formatDocumentType(item.receiver.documentType) }}</dd></div>
+          </dl>
+        </article>
+      }
+
+      <article class="card">
+        <h3>Stone / Open Banking</h3>
+        <dl class="detail-list">
+          <div><dt>Tipo pagamento</dt><dd>{{ formatPaymentType(item.paymentType) }}</dd></div>
+          <div><dt>Status Stone</dt><dd>{{ formatStoneStatus(item.status) }}</dd></div>
+          <div><dt>Criado na Stone</dt><dd>{{ item.stoneCreatedAt ? (item.stoneCreatedAt | date: 'dd/MM/yyyy HH:mm:ss') : '—' }}</dd></div>
+          <div><dt>Liquidado na Stone</dt><dd>{{ item.stoneSettledAt ? (item.stoneSettledAt | date: 'dd/MM/yyyy HH:mm:ss') : '—' }}</dd></div>
+          @if (item.eventType) {
+            <div><dt>Evento webhook</dt><dd>{{ formatWebhookEvent(item.eventType) }}</dd></div>
+          }
+          @if (item.environment) {
+            <div><dt>Ambiente</dt><dd>{{ formatEnvironment(item.environment) }}</dd></div>
+          }
+          @if (item.eventHappenedAt) {
+            <div><dt>Evento em</dt><dd>{{ item.eventHappenedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</dd></div>
+          }
+        </dl>
+      </article>
+
+      <article class="card">
+        <h3>Conciliação</h3>
+        @if (item.reconciliation; as rec) {
+          <dl class="detail-list">
+            <div><dt>Status</dt><dd><span [class]="reconciliationClass(rec.status)">{{ formatReconciliationStatus(rec.status) }}</span></dd></div>
+            <div><dt>Esperado</dt><dd>R$ {{ rec.expectedAmount ?? 0 | number: '1.2-2' }}</dd></div>
+            <div><dt>Recebido</dt><dd>R$ {{ rec.receivedAmount | number: '1.2-2' }}</dd></div>
+            <div><dt>Conciliado em</dt><dd>{{ rec.reconciledAt ? (rec.reconciledAt | date: 'dd/MM/yyyy HH:mm') : '—' }}</dd></div>
+            @if (rec.notes) {
+              <div><dt>Observações</dt><dd>{{ rec.notes }}</dd></div>
+            }
+          </dl>
+        } @else {
+          <p class="muted">Nenhuma conciliação vinculada a este PIX.</p>
+        }
+      </article>
+
+      <article class="card">
+        <h3>Registro no ConfiaPix</h3>
+        <dl class="detail-list">
+          <div><dt>ID interno</dt><dd class="mono">{{ item.id }}</dd></div>
+          <div><dt>Origem ingestão</dt><dd>{{ formatSource(item.source) }}</dd></div>
+          <div><dt>Criado em</dt><dd>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}</dd></div>
+          @if (item.updatedAt) {
+            <div><dt>Atualizado em</dt><dd>{{ item.updatedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</dd></div>
+          }
+        </dl>
+      </article>
+    </div>
+  }
+</section>

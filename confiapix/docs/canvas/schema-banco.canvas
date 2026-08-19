@@ -1,0 +1,27 @@
+{
+	"nodes":[
+		{"id":"sb_title","type":"text","x":-60,"y":-480,"width":520,"height":60,"color":"4","text":"# Schema do Banco\n\nTabelas, índices e constraints — Flyway V1."},
+		{"id":"sb_grp_core","type":"group","x":-400,"y":-380,"width":360,"height":280,"color":"5","label":"Core SaaS"},
+		{"id":"sb_tenants","type":"text","x":-360,"y":-340,"width":140,"height":50,"text":"tenants"},
+		{"id":"sb_users","type":"text","x":-180,"y":-340,"width":120,"height":50,"text":"users"},
+		{"id":"sb_companies","type":"text","x":-360,"y":-260,"width":140,"height":50,"text":"companies"},
+		{"id":"sb_grp_par","type":"group","x":-20,"y":-380,"width":360,"height":280,"color":"6","label":"Parceiros"},
+		{"id":"sb_customers","type":"text","x":20,"y":-340,"width":140,"height":50,"text":"customers"},
+		{"id":"sb_suppliers","type":"text","x":180,"y":-340,"width":140,"height":50,"text":"suppliers"},
+		{"id":"sb_grp_fin","type":"group","x":-400,"y":-60,"width":740,"height":280,"color":"3","label":"Financeiro"},
+		{"id":"sb_receivables","type":"text","x":-360,"y":-20,"width":200,"height":60,"text":"account_receivables"},
+		{"id":"sb_payables","type":"text","x":-120,"y":-20,"width":200,"height":60,"text":"account_payables"},
+		{"id":"sb_idx","type":"text","x":120,"y":-20,"width":200,"height":120,"color":"2","text":"**Índices:**\ntenant_id\ncompany_id\ndue_date\nstatus"},
+		{"id":"sb_chk","type":"text","x":120,"y":120,"width":200,"height":80,"color":"2","text":"**CHECK:**\nstatus IN\nPENDING, PAID,\nOVERDUE, CANCELED"},
+		{"id":"doc_schema","type":"file","x":360,"y":-340,"width":260,"height":50,"file":"07-banco-dados/schema.md"},
+		{"id":"doc_mig","type":"file","x":360,"y":-270,"width":260,"height":50,"file":"07-banco-dados/migrations.md"}
+	],
+	"edges":[
+		{"id":"sb_e1","fromNode":"sb_tenants","fromSide":"right","toNode":"sb_users","toSide":"left","label":"1:N"},
+		{"id":"sb_e2","fromNode":"sb_tenants","fromSide":"bottom","toNode":"sb_companies","toSide":"top","label":"1:N"},
+		{"id":"sb_e3","fromNode":"sb_companies","fromSide":"right","toNode":"sb_customers","toSide":"left","label":"1:N"},
+		{"id":"sb_e4","fromNode":"sb_companies","fromSide":"right","toNode":"sb_suppliers","toSide":"left","label":"1:N"},
+		{"id":"sb_e5","fromNode":"sb_customers","fromSide":"bottom","toNode":"sb_receivables","toSide":"top"},
+		{"id":"sb_e6","fromNode":"sb_suppliers","fromSide":"bottom","toNode":"sb_payables","toSide":"top"}
+	]
+}

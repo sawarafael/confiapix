@@ -1,0 +1,12 @@
+{
+	"nodes":[
+		{"id":"inv_title","type":"text","x":40,"y":-320,"width":440,"height":50,"color":"4","text":"# Invariantes de Domínio\n\nRegras que devem ser sempre verdadeiras."},
+		{"id":"inv_a","type":"text","x":-120,"y":-200,"width":280,"height":60,"color":"3","text":"Customer.company_id\n== Receivable.company_id"},
+		{"id":"inv_b","type":"text","x":200,"y":-200,"width":280,"height":60,"color":"3","text":"Supplier.company_id\n== Payable.company_id"},
+		{"id":"inv_c","type":"text","x":-120,"y":-80,"width":280,"height":60,"color":"5","text":"Company.tenant_id\n== TenantContext.tenantId"},
+		{"id":"inv_d","type":"text","x":200,"y":-80,"width":280,"height":60,"color":"5","text":"User.tenant_id\n== TenantContext.tenantId"},
+		{"id":"doc_ent","type":"file","x":40,"y":40,"width":260,"height":50,"file":"03-dominio/entidades.md"},
+		{"id":"doc_mt","type":"file","x":40,"y":110,"width":260,"height":50,"file":"04-regras-negocio/multi-tenant.md"}
+	],
+	"edges":[]
+}

@@ -1,0 +1,25 @@
+{
+	"nodes":[
+		{"id":"cp_val","type":"text","text":"Validar:\nSupplier ∈ Company\nCompany ∈ Tenant","x":140,"y":-270,"width":260,"height":90,"color":"2"},
+		{"id":"cp_ref","type":"text","text":"Ver também:\n[[canvas/fluxo-conta-receber.canvas]]","x":660,"y":-480,"width":280,"height":100,"color":"6"},
+		{"id":"cp_status","type":"text","text":"Calcular status\nAccountStatusHelper","x":140,"y":-160,"width":260,"height":60},
+		{"id":"cp_open","type":"text","text":"PENDING / OVERDUE","x":180,"y":-60,"width":180,"height":55,"color":"3"},
+		{"id":"cp_pay","type":"text","text":"**PATCH /pay**\nBaixa","x":180,"y":60,"width":180,"height":55,"color":"4"},
+		{"id":"doc_cp","type":"file","file":"05-fluxos/conta-pagar.md","x":120,"y":320,"width":260,"height":50},
+		{"id":"doc_api","type":"file","file":"06-api/payables.md","x":120,"y":390,"width":260,"height":50},
+		{"id":"cp_title","type":"text","text":"# Fluxo — Conta a Pagar\n\nSimétrico ao fluxo de contas a receber.","x":10,"y":-510,"width":520,"height":80,"color":"4"},
+		{"id":"cp_create","type":"text","text":"**POST /payables**\nCriar título","x":180,"y":-380,"width":180,"height":60,"color":"5"},
+		{"id":"cp_update","type":"text","text":"**PUT** (se ≠ PAID)","x":-70,"y":33,"width":160,"height":55},
+		{"id":"cp_delete","type":"text","text":"**DELETE**","x":450,"y":33,"width":160,"height":55,"color":"1"},
+		{"id":"cp_paid","type":"text","text":"**PAID**\npaymentDate = hoje","x":170,"y":180,"width":200,"height":60,"color":"4"}
+	],
+	"edges":[
+		{"id":"cp_e1","fromNode":"cp_create","fromSide":"bottom","toNode":"cp_val","toSide":"top"},
+		{"id":"cp_e2","fromNode":"cp_val","fromSide":"bottom","toNode":"cp_status","toSide":"top"},
+		{"id":"cp_e3","fromNode":"cp_status","fromSide":"bottom","toNode":"cp_open","toSide":"top"},
+		{"id":"cp_e4","fromNode":"cp_open","fromSide":"left","toNode":"cp_update","toSide":"right"},
+		{"id":"cp_e5","fromNode":"cp_open","fromSide":"bottom","toNode":"cp_pay","toSide":"top"},
+		{"id":"cp_e6","fromNode":"cp_open","fromSide":"right","toNode":"cp_delete","toSide":"left"},
+		{"id":"cp_e7","fromNode":"cp_pay","fromSide":"bottom","toNode":"cp_paid","toSide":"top"}
+	]
+}

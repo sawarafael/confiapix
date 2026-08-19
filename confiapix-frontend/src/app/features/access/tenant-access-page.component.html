@@ -1,0 +1,130 @@
+<section class="page">
+  <div class="page__header">
+    <div>
+      <h2>Acessos de empresas</h2>
+      <p class="muted">Cadastre empresas que utilizarão o ConfiaPix</p>
+    </div>
+    <button type="button" class="btn btn--primary" (click)="openCreate()">Nova empresa</button>
+  </div>
+
+  @if (error()) {
+    <div class="alert">{{ error() }}</div>
+  }
+  @if (success()) {
+    <div class="alert alert--success">{{ success() }}</div>
+  }
+
+  @if (showForm()) {
+    <article class="card form-panel">
+      @if (editingId()) {
+        <h3>Editar acesso</h3>
+        <form [formGroup]="editForm" (ngSubmit)="submitEdit()">
+          <div class="form-grid">
+            <label>
+              Nome da empresa
+              <input type="text" formControlName="tenantName" />
+            </label>
+            <label>
+              Plano
+              <select formControlName="plan">
+                <option value="FREE">Gratuito</option>
+                <option value="STARTER">Inicial</option>
+                <option value="PRO">Profissional</option>
+                <option value="ENTERPRISE">Empresarial</option>
+              </select>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" formControlName="active" />
+              Acesso ativo
+            </label>
+          </div>
+          <div class="actions">
+            <button class="btn btn--primary" type="submit" [disabled]="saving()">Salvar</button>
+            <button class="btn btn--ghost" type="button" (click)="cancelForm()">Cancelar</button>
+          </div>
+        </form>
+      } @else {
+        <h3>Nova empresa cliente</h3>
+        <form [formGroup]="createForm" (ngSubmit)="submitCreate()">
+          <div class="form-grid">
+            <label>
+              Nome da empresa
+              <input type="text" formControlName="tenantName" placeholder="Loja Exemplo LTDA" />
+            </label>
+            <label>
+              Plano
+              <select formControlName="plan">
+                <option value="FREE">Gratuito</option>
+                <option value="STARTER">Inicial</option>
+                <option value="PRO">Profissional</option>
+                <option value="ENTERPRISE">Empresarial</option>
+              </select>
+            </label>
+            <label>
+              Nome do administrador
+              <input type="text" formControlName="adminName" placeholder="Administrador" />
+            </label>
+            <label>
+              E-mail do administrador
+              <input type="email" formControlName="adminEmail" placeholder="admin@empresa.com" />
+            </label>
+            <label>
+              Senha inicial
+              <input type="password" formControlName="adminPassword" placeholder="Mínimo 6 caracteres" />
+            </label>
+          </div>
+          <div class="actions">
+            <button class="btn btn--primary" type="submit" [disabled]="saving()">
+              {{ saving() ? 'Cadastrando...' : 'Criar acesso' }}
+            </button>
+            <button class="btn btn--ghost" type="button" (click)="cancelForm()">Cancelar</button>
+          </div>
+        </form>
+      }
+    </article>
+  }
+
+  @if (loading()) {
+    <p class="muted">Carregando empresas...</p>
+  } @else {
+    <article class="card table-card table-card--wide">
+      <table>
+        <thead>
+          <tr>
+            <th>Empresa</th>
+            <th>Plano</th>
+            <th>Administrador</th>
+            <th>Status</th>
+            <th>Criado em</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of items(); track item.id) {
+            <tr>
+              <td>{{ item.name }}</td>
+              <td><span class="badge">{{ formatPlan(item.plan) }}</span></td>
+              <td>
+                <div>{{ item.adminName ?? '—' }}</div>
+                <small class="muted">{{ item.adminEmail ?? '' }}</small>
+              </td>
+              <td>
+                <span class="badge" [class.badge--matched]="item.active" [class.badge--mismatch]="!item.active">
+                  {{ item.active ? 'Ativo' : 'Inativo' }}
+                </span>
+              </td>
+              <td>{{ item.createdAt | date: 'dd/MM/yyyy' }}</td>
+              <td>
+                <button type="button" class="btn btn--ghost btn--sm" (click)="openEdit(item)">Editar</button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="empty">Nenhuma empresa cliente cadastrada.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </article>
+  }
+</section>

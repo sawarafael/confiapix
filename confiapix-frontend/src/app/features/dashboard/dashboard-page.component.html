@@ -1,0 +1,74 @@
+<section class="page">
+  <div class="page__header">
+    <h2>Estatísticas</h2>
+    <select class="select-pill">
+      <option>Último mês</option>
+    </select>
+  </div>
+
+  @if (loading()) {
+    <p class="muted">Carregando indicadores...</p>
+  } @else if (error()) {
+    <div class="alert">{{ error() }}</div>
+  } @else if (summary(); as s) {
+    <div class="stats-grid">
+      <app-stat-card label="A receber" [value]="s.totalReceivable" [delta]="12.5" />
+      <app-stat-card label="A pagar" [value]="s.totalPayable" [delta]="-4.2" />
+      <app-stat-card label="Saldo projetado" [value]="s.projectedBalance" [delta]="8.1" />
+      <app-stat-card label="Recebíveis vencidos" [value]="s.overdueReceivable" [delta]="-2.3" />
+    </div>
+
+    <div class="cards-grid cards-grid--2">
+      <article class="card card--chart">
+        <div class="card__head">
+          <h3>Conciliações por status</h3>
+          <select class="select-pill select-pill--sm">
+            <option>Este ano</option>
+          </select>
+        </div>
+        <div class="card__body">
+          <app-donut-chart [segments]="donutSegments()" centerLabel="Maior volume" />
+        </div>
+      </article>
+
+      <article class="card card--chart">
+        <div class="card__head">
+          <h3>Saúde da conciliação</h3>
+          <span class="muted-sm">Atualizado agora</span>
+        </div>
+        <div class="card__body">
+          <app-gauge-chart [value]="healthScore()" [label]="healthLabel()" />
+        </div>
+      </article>
+    </div>
+
+    <div class="cards-grid cards-grid--2">
+      <article class="card card--chart">
+        <div class="card__head">
+          <h3>PIX recebidos</h3>
+          <select class="select-pill select-pill--sm">
+            <option>Últimos meses</option>
+          </select>
+        </div>
+        <div class="card__body card__body--stretch">
+          <app-area-chart [points]="areaPoints()" />
+        </div>
+      </article>
+
+      <article class="card card--dark">
+        <div class="card__head">
+          <h3>Indicadores</h3>
+          <span class="muted-sm muted-sm--light">Atualizado agora</span>
+        </div>
+        <ul class="kpi-list">
+          @for (kpi of kpis(); track kpi.label) {
+            <li>
+              <span>{{ kpi.label }}</span>
+              <strong>{{ kpi.value }}</strong>
+            </li>
+          }
+        </ul>
+      </article>
+    </div>
+  }
+</section>

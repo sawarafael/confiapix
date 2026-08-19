@@ -1,0 +1,172 @@
+{
+  "info": {
+    "name": "ConfiaPix - Stone API_KEY (Sandbox)",
+    "description": "Fluxo para testar integração Stone com SecretKey (sk_...) no ConfiaPix.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "token", "value": "" },
+    { "key": "stoneSecretKey", "value": "sk_COLOQUE_SUA_CHAVE_AQUI" },
+    { "key": "stoneAccountId", "value": "194047458" },
+    { "key": "pixId", "value": "" },
+    { "key": "pixTxid", "value": "TX-POSTMAN-1" }
+  ],
+  "item": [
+    {
+      "name": "1. Auth - Registrar tenant",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tenantName\": \"Minha Empresa\",\n  \"name\": \"Admin\",\n  \"email\": \"admin@confiapix.test\",\n  \"password\": \"secret123\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/register"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json.data && json.data.token) {",
+              "  pm.collectionVariables.set('token', json.data.token);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@confiapix.test\",\n  \"password\": \"secret123\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/login"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json.data && json.data.token) {",
+              "  pm.collectionVariables.set('token', json.data.token);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Stone - Salvar credenciais API_KEY",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"authMode\": \"API_KEY\",\n  \"businessModel\": \"GATEWAY\",\n  \"clientSecret\": \"{{stoneSecretKey}}\",\n  \"accountId\": \"{{stoneAccountId}}\",\n  \"merchantId\": \"{{stoneAccountId}}\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/integrations/stone/credentials"
+      }
+    },
+    {
+      "name": "4. Stone - Testar conexão",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/v1/integrations/stone/test-connection"
+      }
+    },
+    {
+      "name": "5. Stone - Consultar credenciais",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/v1/integrations/stone/credentials"
+      }
+    },
+    {
+      "name": "6. Stone - Sync PIX (Open Banking)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/v1/integrations/stone/sync"
+      },
+      "description": "Pode falhar no modo API_KEY se a Stone não liberar PIX Open Banking com SecretKey. O passo 4 valida a chave sk_."
+    },
+    {
+      "name": "7. PIX - Listar",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/v1/pix?page=0&size=20"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json.data && json.data.content && json.data.content.length) {",
+              "  pm.collectionVariables.set('pixId', json.data.content[0].id);",
+              "  pm.collectionVariables.set('pixTxid', json.data.content[0].txid);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "7b. PIX - Detalhar por ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/v1/pix/{{pixId}}",
+        "description": "Use o `id` retornado no passo 7 (variável `pixId`)."
+      }
+    },
+    {
+      "name": "7c. PIX - Detalhar por TXID",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/v1/pix/txid/{{pixTxid}}",
+        "description": "Alternativa ao passo 7b quando você conhece o TXID."
+      }
+    },
+    {
+      "name": "8. Webhook Stone - Simular PIX (local)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"env\": \"sandbox\",\n  \"event_type\": \"pix_inbound_payment_received\",\n  \"id\": \"evt-postman-1\",\n  \"target_data\": {\n    \"account_id\": \"{{stoneAccountId}}\",\n    \"amount\": 10000,\n    \"status\": \"SETTLED\",\n    \"transaction_id\": \"TX-POSTMAN-1\",\n    \"end_to_end_id\": \"EPOSTMAN001\",\n    \"settled_at\": \"2024-06-10T12:00:00Z\"\n  }\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/webhooks/stone/pix"
+      },
+      "description": "Endpoint público. Requer credenciais Stone salvas com o mesmo account_id."
+    }
+  ]
+}

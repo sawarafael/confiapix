@@ -1,0 +1,41 @@
+<div class="auth">
+  <div class="auth__blobs" aria-hidden="true"></div>
+  <div class="auth__card">
+    <div class="auth__brand">
+      <img class="auth__logo" src="logo.png" alt="ConfiaPix" width="56" height="56" />
+      <h1>Criar conta</h1>
+      <p>Registre seu tenant no ConfiaPix</p>
+    </div>
+
+    @if (error()) {
+      <div class="alert">{{ error() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label>
+        Nome da empresa
+        <input type="text" formControlName="tenantName" placeholder="Minha Empresa" />
+      </label>
+      <label>
+        Seu nome
+        <input type="text" formControlName="name" placeholder="Administrador" />
+      </label>
+      <label>
+        E-mail
+        <input type="email" formControlName="email" placeholder="admin@empresa.com" />
+      </label>
+      <label>
+        Senha
+        <input type="password" formControlName="password" placeholder="Mínimo 6 caracteres" />
+      </label>
+      <button class="btn btn--primary" type="submit" [disabled]="loading()">
+        {{ loading() ? 'Registrando...' : 'Criar conta' }}
+      </button>
+    </form>
+
+    <p class="auth__footer">
+      Já tem conta?
+      <a routerLink="/login">Entrar</a>
+    </p>
+  </div>
+</div>

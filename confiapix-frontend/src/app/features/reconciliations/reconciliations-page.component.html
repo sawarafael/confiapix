@@ -1,0 +1,40 @@
+<section class="page">
+  <div class="page__header">
+    <h2>Conciliações</h2>
+  </div>
+
+  @if (loading()) {
+    <p class="muted">Carregando...</p>
+  } @else if (error()) {
+    <div class="alert">{{ error() }}</div>
+  } @else {
+    <article class="card table-card table-card--wide">
+      <table>
+        <thead>
+          <tr>
+            <th>TXID do PIX</th>
+            <th>Esperado</th>
+            <th>Recebido</th>
+            <th>Status</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of items(); track item.id) {
+            <tr>
+              <td class="mono">{{ item.pixTxid }}</td>
+              <td>R$ {{ item.expectedAmount | number: '1.2-2' }}</td>
+              <td>R$ {{ item.receivedAmount | number: '1.2-2' }}</td>
+              <td><span [class]="statusClass(item.status)">{{ formatStatus(item.status) }}</span></td>
+              <td>{{ (item.reconciledAt ?? item.createdAt) | date: 'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="empty">Nenhuma conciliação encontrada.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </article>
+  }
+</section>

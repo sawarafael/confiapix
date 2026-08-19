@@ -1,0 +1,23 @@
+{
+	"nodes":[
+		{"id":"er_title","type":"text","x":-100,"y":-520,"width":500,"height":60,"color":"4","text":"# Modelo Entidade-Relacionamento\n\nSchema lógico do MVP 1.0 — PostgreSQL + UUID"},
+		{"id":"er_tenant","type":"text","x":-400,"y":-400,"width":220,"height":200,"color":"5","text":"**tenants**\n---\nid UUID PK\nname\nplan\nactive\ncreated_at\nupdated_at"},
+		{"id":"er_user","type":"text","x":-120,"y":-400,"width":220,"height":220,"color":"5","text":"**users**\n---\nid UUID PK\nname\nemail UK\npassword\nactive\ntenant_id FK\ncreated_at\nupdated_at"},
+		{"id":"er_company","type":"text","x":200,"y":-400,"width":240,"height":240,"color":"5","text":"**companies**\n---\nid UUID PK\ncorporate_name\ntrade_name\ndocument\nactive\ntenant_id FK\ncreated_at\nupdated_at"},
+		{"id":"er_customer","type":"text","x":-400,"y":-120,"width":220,"height":200,"color":"6","text":"**customers**\n---\nid UUID PK\nname\ndocument\nemail\nphone\ncompany_id FK\ncreated_at\nupdated_at"},
+		{"id":"er_supplier","type":"text","x":-120,"y":-120,"width":220,"height":200,"color":"6","text":"**suppliers**\n---\nid UUID PK\nname\ndocument\nemail\nphone\ncompany_id FK\ncreated_at\nupdated_at"},
+		{"id":"er_receivable","type":"text","x":200,"y":-120,"width":260,"height":260,"color":"3","text":"**account_receivables**\n---\nid UUID PK\ndescription\namount\ndue_date\npayment_date\nstatus\ncustomer_id FK\ncompany_id FK\ncreated_at\nupdated_at"},
+		{"id":"er_payable","type":"text","x":200,"y":200,"width":260,"height":260,"color":"3","text":"**account_payables**\n---\nid UUID PK\ndescription\namount\ndue_date\npayment_date\nstatus\nsupplier_id FK\ncompany_id FK\ncreated_at\nupdated_at"},
+		{"id":"doc_schema","type":"file","x":520,"y":-400,"width":240,"height":50,"file":"07-banco-dados/schema.md"}
+	],
+	"edges":[
+		{"id":"er_e1","fromNode":"er_tenant","fromSide":"right","toNode":"er_user","toSide":"left","label":"1:N"},
+		{"id":"er_e2","fromNode":"er_tenant","fromSide":"right","toNode":"er_company","toSide":"left","label":"1:N"},
+		{"id":"er_e3","fromNode":"er_company","fromSide":"left","toNode":"er_customer","toSide":"right","label":"1:N"},
+		{"id":"er_e4","fromNode":"er_company","fromSide":"bottom","toNode":"er_supplier","toSide":"top","label":"1:N"},
+		{"id":"er_e5","fromNode":"er_customer","fromSide":"right","toNode":"er_receivable","toSide":"left","label":"1:N"},
+		{"id":"er_e6","fromNode":"er_supplier","fromSide":"right","toNode":"er_payable","toSide":"left","label":"1:N"},
+		{"id":"er_e7","fromNode":"er_company","fromSide":"bottom","toNode":"er_receivable","toSide":"top","label":"1:N"},
+		{"id":"er_e8","fromNode":"er_company","fromSide":"bottom","toNode":"er_payable","toSide":"top","label":"1:N"}
+	]
+}

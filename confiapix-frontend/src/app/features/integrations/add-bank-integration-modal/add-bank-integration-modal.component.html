@@ -1,0 +1,271 @@
+@if (open()) {
+
+  <div class="modal-backdrop" (click)="close()" aria-hidden="true"></div>
+
+
+
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="add-bank-title">
+
+    <header class="modal__header">
+
+      <div>
+
+        <h2 id="add-bank-title">Nova integração bancária</h2>
+
+        <p>Escolha qualquer banco brasileiro e configure as credenciais conforme o schema da instituição.</p>
+
+      </div>
+
+      <button type="button" class="modal__close" aria-label="Fechar" (click)="close()">
+
+        <span class="material-symbols-outlined">close</span>
+
+      </button>
+
+    </header>
+
+
+
+    <ol class="wizard-steps">
+
+      @for (item of [1, 2, 3]; track item) {
+
+        <li [class.wizard-steps__item--active]="step() === item" [class.wizard-steps__item--done]="step() > item">
+
+          <span>{{ item }}</span>
+
+          {{ stepLabel($any(item)) }}
+
+        </li>
+
+      }
+
+    </ol>
+
+
+
+    @if (error()) {
+
+      <div class="alert">{{ error() }}</div>
+
+    }
+
+
+
+    <div class="modal__body">
+
+      @if (step() === 1) {
+
+        @if (!canAddIntegration()) {
+
+          <p class="muted">Todos os bancos disponíveis já foram integrados. Gerencie uma integração existente.</p>
+
+        } @else {
+
+          <p class="step-intro">Busque e selecione a instituição financeira:</p>
+
+          <label class="bank-search">
+            <span class="bank-search__label">Buscar banco</span>
+            <div class="bank-search__control">
+              <span class="material-symbols-outlined bank-search__icon">search</span>
+              <input
+                type="search"
+                [value]="bankSearch()"
+                (input)="bankSearch.set($any($event.target).value)"
+                placeholder="Nome, COMPE ou ISPB — ex.: Itaú, 341, Bradesco"
+              />
+            </div>
+          </label>
+          <p class="bank-search__count muted">{{ filteredProviders().length }} banco(s) disponível(is)</p>
+
+          <div class="bank-picker">
+
+            @for (item of filteredProviders(); track item.provider) {
+
+              <button
+
+                type="button"
+
+                class="bank-picker__item"
+
+                [class.bank-picker__item--selected]="selectedProvider()?.provider === item.provider"
+
+                (click)="selectProvider(item)"
+
+              >
+
+                <span class="bank-picker__icon material-symbols-outlined">{{ providerIcon(item) }}</span>
+
+                <strong>{{ item.displayName }}</strong>
+
+                <span>
+
+                  @if (item.compe) {
+
+                    COMPE {{ item.compe }}
+
+                  }
+
+                  @if (item.ispb) {
+
+                    · ISPB {{ item.ispb }}
+
+                  }
+
+                </span>
+
+                <ul class="bank-picker__features">
+
+                  @if (item.supportsWebhook) {
+
+                    <li>Webhook</li>
+
+                  }
+
+                  @if (item.supportsSync) {
+
+                    <li>Sincronização</li>
+
+                  }
+
+                  @if (item.supportsConnectionTest) {
+
+                    <li>Teste de conexão</li>
+
+                  }
+
+                  @if (!item.supportsSync && !item.supportsConnectionTest) {
+
+                    <li>Credenciais</li>
+
+                  }
+
+                </ul>
+
+              </button>
+
+            } @empty {
+
+              <p class="muted">Nenhum banco encontrado para "{{ bankSearch() }}".</p>
+
+            }
+
+          </div>
+
+        }
+
+      }
+
+
+
+      @if (step() === 2 && selectedProvider(); as provider) {
+
+        <p class="step-intro">
+
+          Informe as credenciais de <strong>{{ provider.displayName }}</strong>:
+
+        </p>
+
+
+
+        @if (reserveNotice(); as notice) {
+
+          <div class="alert alert--info">{{ notice }}</div>
+
+        }
+
+
+
+        <app-dynamic-credential-form [form]="form" [fields]="credentialFields()" />
+
+      }
+
+
+
+      @if (step() === 3 && selectedProvider(); as provider) {
+
+        <div class="review">
+
+          <h3>Revise antes de ativar</h3>
+
+          <dl>
+
+            <div><dt>Banco</dt><dd>{{ provider.displayName }}</dd></div>
+
+            @if (provider.compe) {
+
+              <div><dt>COMPE</dt><dd>{{ provider.compe }}</dd></div>
+
+            }
+
+            @for (entry of reviewItems(); track entry.label) {
+
+              <div><dt>{{ entry.label }}</dt><dd>{{ entry.value }}</dd></div>
+
+            }
+
+          </dl>
+
+          <p class="muted review__hint">Após salvar, a integração ficará ativa e pronta para uso conforme as capacidades do banco.</p>
+
+        </div>
+
+      }
+
+    </div>
+
+
+
+    <footer class="modal__footer">
+
+      @if (step() > 1) {
+
+        <button type="button" class="btn btn--ghost" (click)="previousStep()">Voltar</button>
+
+      } @else {
+
+        <button type="button" class="btn btn--ghost" (click)="close()">Cancelar</button>
+
+      }
+
+
+
+      <div class="modal__footer-actions">
+
+        @if (step() < 3) {
+
+          <button
+
+            type="button"
+
+            class="btn btn--primary"
+
+            [disabled]="step() === 1 && !canAddIntegration()"
+
+            (click)="nextStep()"
+
+          >
+
+            Próximo
+
+          </button>
+
+        } @else {
+
+          <button type="button" class="btn btn--primary" [disabled]="saving()" (click)="save()">
+
+            {{ saving() ? 'Salvando...' : 'Salvar integração' }}
+
+          </button>
+
+        }
+
+      </div>
+
+    </footer>
+
+  </div>
+
+}
+
+

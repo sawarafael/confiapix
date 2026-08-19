@@ -1,0 +1,111 @@
+.integration-detail {
+  max-width: 920px;
+}
+
+.integration-detail__header {
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--primary);
+}
+
+.back-link .material-symbols-outlined {
+  font-size: 1.1rem;
+}
+
+.integration-detail__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.integration-detail__badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(99, 102, 241, 0.1));
+  color: var(--primary);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.integration-detail__meta {
+  margin: 0.2rem 0 0;
+  font-size: 0.875rem;
+}
+
+.integration-detail__card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.integration-detail__card app-dynamic-credential-form {
+  display: block;
+  padding: 1.35rem 1.35rem 0.5rem;
+}
+
+.alert--info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  color: var(--text-secondary);
+}
+
+.alert--info .material-symbols-outlined {
+  font-size: 1.15rem;
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+.integration-detail__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.15rem 1.15rem;
+  border-top: 1px solid var(--border);
+  background: rgba(148, 163, 184, 0.06);
+}
+
+body.dark-mode .integration-detail__actions {
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.integration-detail__actions-primary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .integration-detail__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .integration-detail__actions-primary,
+  .integration-detail__actions-primary .btn,
+  .integration-detail__actions .btn {
+    width: 100%;
+  }
+}

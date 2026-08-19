@@ -1,0 +1,8 @@
+{
+  "name": "confiapix-website",
+  "private": true,
+  "description": "Site institucional e portfólio de vendas do ConfiaPix",
+  "scripts": {
+    "start": "npx --yes serve -l 4300"
+  }
+}

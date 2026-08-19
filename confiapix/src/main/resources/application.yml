@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: confiapix
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/confiapix}
+    username: ${DB_USERNAME:confiapix}
+    password: ${DB_PASSWORD:confiapix}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: ${PORT:${SERVER_PORT:8080}}
+
+confiapix:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200,http://127.0.0.1:4200}
+  encryption:
+    secret: ${ENCRYPTION_SECRET:confiapix-encryption-secret-change-in-production-32chars-min}
+  jwt:
+    secret: ${JWT_SECRET:confiapix-dev-secret-key-change-in-production-min-256-bits-long-enough}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+    refresh-expiration-ms: ${JWT_REFRESH_EXPIRATION_MS:604800000}
+  stone:
+    base-url: ${STONE_BASE_URL:https://sandbox-api.openbank.stone.com.br}
+    token-url: ${STONE_TOKEN_URL:https://sandbox.openbank.stone.com.br/auth/realms/stone_bank/protocol/openid-connect/token}
+    pix-sync-interval-ms: ${PIX_SYNC_INTERVAL_MS:300000}
+    sync-job-enabled: ${STONE_SYNC_JOB_ENABLED:true}
+    webhook-private-key-pem: ${STONE_WEBHOOK_PRIVATE_KEY:}
+    webhook-public-key-pem: ${STONE_WEBHOOK_PUBLIC_KEY:}
+    payments-base-url: ${STONE_PAYMENTS_BASE_URL:https://payments.stone.com.br}
+    sandbox: ${STONE_SANDBOX:true}
+    sandbox-gateway-host: ${STONE_SANDBOX_GATEWAY_HOST:sdx-ecommerce-payments.stone.com.br}
+    sandbox-subacquirer-host: ${STONE_SANDBOX_SUBACQUIRER_HOST:sdx-payments.stone.com.br}
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    com.confiapix: INFO
+    org.springframework.security: WARN

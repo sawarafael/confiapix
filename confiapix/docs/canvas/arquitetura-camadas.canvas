@@ -1,0 +1,23 @@
+{
+	"nodes":[
+		{"id":"ac_title","type":"text","x":100,"y":-420,"width":480,"height":60,"color":"4","text":"# Arquitetura em Camadas\n\nClean Architecture modular — fluxo de dependência top-down."},
+		{"id":"ac_ctrl","type":"text","x":220,"y":-300,"width":240,"height":80,"color":"6","text":"**Controller**\nREST + OpenAPI\nDTO + @Valid"},
+		{"id":"ac_svc","type":"text","x":220,"y":-180,"width":240,"height":80,"color":"5","text":"**Service**\nRegras de negócio\n@Transactional"},
+		{"id":"ac_map","type":"text","x":520,"y":-180,"width":200,"height":80,"color":"5","text":"**Mapper**\nMapStruct\nDTO ↔ Entity"},
+		{"id":"ac_repo","type":"text","x":220,"y":-60,"width":240,"height":80,"color":"3","text":"**Repository**\nSpring Data JPA\nQueries por tenant"},
+		{"id":"ac_ent","type":"text","x":220,"y":60,"width":240,"height":80,"color":"3","text":"**Entity**\nJPA + BaseEntity\nAuditoria"},
+		{"id":"ac_pg","type":"text","x":220,"y":180,"width":240,"height":60,"color":"1","text":"**PostgreSQL**\nFlyway migrations"},
+		{"id":"ac_sec","type":"text","x":-120,"y":-180,"width":200,"height":100,"color":"2","text":"**Security**\nJwtAuthenticationFilter\nTenantContextHolder"},
+		{"id":"ac_exc","type":"text","x":520,"y":-300,"width":220,"height":80,"color":"2","text":"**GlobalExceptionHandler**\nApiResponse padronizado"},
+		{"id":"doc_arch","type":"file","x":520,"y":60,"width":260,"height":50,"file":"02-arquitetura/arquitetura-geral.md"}
+	],
+	"edges":[
+		{"id":"ac_e1","fromNode":"ac_sec","fromSide":"right","toNode":"ac_ctrl","toSide":"left","label":"protege"},
+		{"id":"ac_e2","fromNode":"ac_ctrl","fromSide":"bottom","toNode":"ac_svc","toSide":"top"},
+		{"id":"ac_e3","fromNode":"ac_svc","fromSide":"right","toNode":"ac_map","toSide":"left"},
+		{"id":"ac_e4","fromNode":"ac_svc","fromSide":"bottom","toNode":"ac_repo","toSide":"top"},
+		{"id":"ac_e5","fromNode":"ac_repo","fromSide":"bottom","toNode":"ac_ent","toSide":"top"},
+		{"id":"ac_e6","fromNode":"ac_ent","fromSide":"bottom","toNode":"ac_pg","toSide":"top","label":"persiste"},
+		{"id":"ac_e7","fromNode":"ac_ctrl","fromSide":"right","toNode":"ac_exc","toSide":"left","label":"erros"}
+	]
+}

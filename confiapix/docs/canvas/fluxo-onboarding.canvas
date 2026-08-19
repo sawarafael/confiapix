@@ -1,0 +1,26 @@
+{
+	"nodes":[
+		{"id":"fo_title","type":"text","x":-40,"y":-480,"width":480,"height":60,"color":"4","text":"# Fluxo de Onboarding\n\nPrimeiro uso — do registro ao dashboard."},
+		{"id":"fo_user","type":"text","x":140,"y":-360,"width":100,"height":50,"color":"6","text":"**Usuário**"},
+		{"id":"fo_s1","type":"text","x":80,"y":-260,"width":220,"height":60,"color":"5","text":"**1. POST /auth/register**\nTenant + User + JWT"},
+		{"id":"fo_s2","type":"text","x":80,"y":-160,"width":220,"height":55,"text":"**2. POST /companies**\nCriar empresa"},
+		{"id":"fo_s3","type":"text","x":-80,"y":-60,"width":200,"height":55,"text":"**3. POST /customers**"},
+		{"id":"fo_s4","type":"text","x":140,"y":-60,"width":200,"height":55,"text":"**4. POST /suppliers**"},
+		{"id":"fo_s5","type":"text","x":-80,"y":40,"width":200,"height":55,"color":"3","text":"**5. POST /receivables**"},
+		{"id":"fo_s6","type":"text","x":140,"y":40,"width":200,"height":55,"color":"3","text":"**6. POST /payables**"},
+		{"id":"fo_s7","type":"text","x":80,"y":140,"width":220,"height":55,"color":"4","text":"**7. GET /dashboard**\nIndicadores"},
+		{"id":"fo_note","type":"text","x":360,"y":-260,"width":260,"height":120,"color":"2","text":"**Header em todos os passos 2-7:**\n\n```\nAuthorization: Bearer {token}\n```"},
+		{"id":"doc_onb","type":"file","x":360,"y":-100,"width":260,"height":50,"file":"05-fluxos/onboarding.md"},
+		{"id":"doc_api","type":"file","x":360,"y":40,"width":260,"height":50,"file":"06-api/indice-api.md"}
+	],
+	"edges":[
+		{"id":"fo_e1","fromNode":"fo_user","fromSide":"bottom","toNode":"fo_s1","toSide":"top"},
+		{"id":"fo_e2","fromNode":"fo_s1","fromSide":"bottom","toNode":"fo_s2","toSide":"top"},
+		{"id":"fo_e3","fromNode":"fo_s2","fromSide":"bottom","toNode":"fo_s3","toSide":"top"},
+		{"id":"fo_e4","fromNode":"fo_s2","fromSide":"bottom","toNode":"fo_s4","toSide":"top"},
+		{"id":"fo_e5","fromNode":"fo_s3","fromSide":"bottom","toNode":"fo_s5","toSide":"top"},
+		{"id":"fo_e6","fromNode":"fo_s4","fromSide":"bottom","toNode":"fo_s6","toSide":"top"},
+		{"id":"fo_e7","fromNode":"fo_s5","fromSide":"bottom","toNode":"fo_s7","toSide":"top"},
+		{"id":"fo_e8","fromNode":"fo_s6","fromSide":"bottom","toNode":"fo_s7","toSide":"top"}
+	]
+}

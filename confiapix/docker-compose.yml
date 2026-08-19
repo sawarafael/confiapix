@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: confiapix-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-confiapix}
+      POSTGRES_USER: ${POSTGRES_USER:-confiapix}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-confiapix}
+    ports:
+      - "5432:5432"
+    volumes:
+      - confiapix_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U confiapix -d confiapix"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  app:
+    build: .
+    container_name: confiapix-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-confiapix}
+      DB_USERNAME: ${POSTGRES_USER:-confiapix}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-confiapix}
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET:-confiapix-docker-encryption-secret-32chars-min}
+      JWT_SECRET: ${JWT_SECRET:-confiapix-docker-secret-key-change-in-production-min-256-bits-long-enough}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:4200,http://127.0.0.1:4200,http://localhost:8081}
+      STONE_SYNC_JOB_ENABLED: "false"
+      STONE_SANDBOX: "true"
+      PORT: "8080"
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  frontend:
+    profiles: ["full"]
+    build:
+      context: ../confiapix-frontend
+      dockerfile: Dockerfile
+    container_name: confiapix-frontend
+    depends_on:
+      - app
+    environment:
+      PORT: "8080"
+      API_UPSTREAM: http://app:8080
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+
+volumes:
+  confiapix_pg_data:

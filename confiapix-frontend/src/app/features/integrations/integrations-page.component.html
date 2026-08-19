@@ -1,0 +1,106 @@
+<section class="page">
+  <div class="page__header">
+    <div>
+      <h2>Integrações bancárias</h2>
+      <p class="muted">Conecte os bancos que sua empresa utiliza para receber PIX e conciliar automaticamente.</p>
+      @if (!loading() && catalogSize() > 0) {
+        <p class="muted catalog-meta">
+          {{ configuredProviders().length }} integrada(s) · {{ availableToAdd().length }} banco(s) disponível(is) no catálogo
+        </p>
+      }
+    </div>
+    <button
+      type="button"
+      class="btn btn--primary add-btn"
+      [disabled]="loading() || openingWizard() || !canAddIntegration()"
+      (click)="openWizard()"
+    >
+      <span class="material-symbols-outlined">add</span>
+      {{ openingWizard() ? 'Carregando...' : 'Integração com banco' }}
+    </button>
+  </div>
+
+  @if (loading()) {
+    <p class="muted">Carregando...</p>
+  } @else if (error()) {
+    <div class="alert">{{ error() }}</div>
+  } @else {
+    @if (info()) {
+      <div class="alert">{{ info() }}</div>
+    }
+
+    @if (!canAddIntegration()) {
+      <div class="alert alert--info">
+        @if (catalogSize() <= 3) {
+          O catálogo está limitado a {{ catalogSize() }} bancos. Atualize o backend com
+          <code>docker compose up -d --build</code> para liberar mais de 150 instituições.
+        } @else {
+          Você já integrou todos os bancos do catálogo atual. Use <strong>Gerenciar</strong> para editar uma integração
+          ou remova uma integração existente para conectar outro banco.
+        }
+      </div>
+    }
+
+    @if (configuredProviders().length === 0) {
+      <article class="card empty-state">
+        <span class="material-symbols-outlined empty-state__icon">account_balance</span>
+        <h3>Nenhuma integração ativa</h3>
+        <p class="muted">Adicione a integração com o banco que melhor se ajusta à sua empresa.</p>
+        <button type="button" class="btn btn--primary" [disabled]="!canAddIntegration() || openingWizard()" (click)="openWizard()">
+          <span class="material-symbols-outlined">add</span>
+          Adicionar integração
+        </button>
+      </article>
+    } @else {
+      <div class="grid">
+        @for (item of configuredProviders(); track item.provider) {
+          <article class="card bank-card">
+            <header class="bank-card__header">
+              <div class="bank-card__title">
+                <span class="material-symbols-outlined bank-card__icon">{{ providerIcon(item) }}</span>
+                <div class="bank-card__title-text">
+                  <h3>{{ item.displayName }}</h3>
+                  @if (item.compe) {
+                    <span class="bank-card__compe">COMPE {{ item.compe }}</span>
+                  }
+                </div>
+              </div>
+              <span class="badge" [class.badge--active]="item.active" [class.badge--inactive]="!item.active">
+                {{ statusLabel(item) }}
+              </span>
+            </header>
+
+            <div class="bank-card__body">
+              <p class="bank-card__description">{{ item.description }}</p>
+
+              <div class="bank-card__capabilities">
+                @for (feature of featureItems(item); track feature.label) {
+                  <span
+                    class="capability"
+                    [class.capability--enabled]="feature.enabled"
+                    [class.capability--disabled]="!feature.enabled"
+                  >
+                    {{ feature.label }}
+                  </span>
+                }
+              </div>
+            </div>
+
+            <footer class="bank-card__footer">
+              <a class="btn btn--ghost bank-card__action" [routerLink]="['/integrations', item.provider]">
+                Gerenciar
+              </a>
+            </footer>
+          </article>
+        }
+      </div>
+    }
+  }
+</section>
+
+<app-add-bank-integration-modal
+  [open]="wizardOpen()"
+  [providers]="providers()"
+  (closed)="closeWizard()"
+  (saved)="onIntegrationSaved()"
+/>

@@ -1,0 +1,25 @@
+﻿{
+	"nodes":[
+		{"id":"ms_title","type":"text","x":200,"y":-400,"width":400,"height":70,"color":"4","text":"# Mapa do Sistema ConfiaPix\n\nVisão macro dos módulos e relacionamentos."},
+		{"id":"ms_tenant","type":"text","x":320,"y":-280,"width":160,"height":80,"color":"5","text":"## Tenant\nOrganização SaaS"},
+		{"id":"ms_user","type":"text","x":80,"y":-160,"width":140,"height":70,"color":"5","text":"## User\nAutenticação"},
+		{"id":"ms_company","type":"text","x":320,"y":-160,"width":160,"height":70,"color":"5","text":"## Company\nMulti-empresa"},
+		{"id":"ms_customer","type":"text","x":80,"y":0,"width":140,"height":70,"color":"6","text":"## Customer\nClientes"},
+		{"id":"ms_supplier","type":"text","x":320,"y":0,"width":160,"height":70,"color":"6","text":"## Supplier\nFornecedores"},
+		{"id":"ms_receivable","type":"text","x":-80,"y":160,"width":180,"height":80,"color":"3","text":"## AccountReceivable\nContas a receber"},
+		{"id":"ms_payable","type":"text","x":200,"y":160,"width":180,"height":80,"color":"3","text":"## AccountPayable\nContas a pagar"},
+		{"id":"ms_dashboard","type":"text","x":480,"y":160,"width":160,"height":80,"color":"1","text":"## Dashboard\nIndicadores"},
+		{"id":"doc_dom","type":"file","x":680,"y":-280,"width":260,"height":50,"file":"03-dominio/modelo-de-dominio.md"},
+		{"id":"doc_prod","type":"file","x":680,"y":-210,"width":260,"height":50,"file":"01-visao-geral/produto.md"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"ms_tenant","fromSide":"left","toNode":"ms_user","toSide":"right","label":"possui"},
+		{"id":"e2","fromNode":"ms_tenant","fromSide":"bottom","toNode":"ms_company","toSide":"top","label":"possui"},
+		{"id":"e3","fromNode":"ms_company","fromSide":"left","toNode":"ms_customer","toSide":"right","label":"possui"},
+		{"id":"e4","fromNode":"ms_company","fromSide":"bottom","toNode":"ms_supplier","toSide":"top","label":"possui"},
+		{"id":"e5","fromNode":"ms_customer","fromSide":"bottom","toNode":"ms_receivable","toSide":"top","label":"origina"},
+		{"id":"e6","fromNode":"ms_supplier","fromSide":"bottom","toNode":"ms_payable","toSide":"top","label":"origina"},
+		{"id":"e7","fromNode":"ms_receivable","fromSide":"right","toNode":"ms_dashboard","toSide":"left","label":"alimenta"},
+		{"id":"e8","fromNode":"ms_payable","fromSide":"right","toNode":"ms_dashboard","toSide":"left","label":"alimenta"}
+	]
+}

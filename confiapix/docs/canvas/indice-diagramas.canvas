@@ -1,0 +1,28 @@
+﻿{
+	"nodes":[
+		{"id":"idx_title","type":"text","x":-200,"y":-620,"width":520,"height":80,"color":"4","text":"# ConfiaPix — Índice de Diagramas\n\nHub central de todos os canvas do projeto. Clique nos nós para navegar."},
+		{"id":"grp_dom","type":"group","x":-720,"y":-480,"width":680,"height":420,"color":"5","label":"Domínio & Arquitetura"},
+		{"id":"grp_flux","type":"group","x":-20,"y":-480,"width":680,"height":420,"color":"6","label":"Fluxos"},
+		{"id":"grp_reg","type":"group","x":680,"y":-480,"width":680,"height":420,"color":"3","label":"Regras & Dados"},
+		{"id":"c_mapa","type":"file","x":-680,"y":-420,"width":280,"height":60,"color":"4","file":"canvas/mapa-sistema.canvas"},
+		{"id":"c_er","type":"file","x":-680,"y":-340,"width":280,"height":60,"color":"4","file":"canvas/modelo-dominio-er.canvas"},
+		{"id":"c_camadas","type":"file","x":-680,"y":-260,"width":280,"height":60,"color":"4","file":"canvas/arquitetura-camadas.canvas"},
+		{"id":"c_modulos","type":"file","x":-680,"y":-180,"width":280,"height":60,"color":"4","file":"canvas/dependencias-modulos.canvas"},
+		{"id":"c_inv","type":"file","x":-360,"y":-100,"width":280,"height":60,"color":"4","file":"canvas/invariantes-dominio.canvas"},
+		{"id":"c_auth","type":"file","x":20,"y":-420,"width":280,"height":60,"color":"6","file":"canvas/fluxo-autenticacao.canvas"},
+		{"id":"c_req","type":"file","x":20,"y":-340,"width":280,"height":60,"color":"6","file":"canvas/fluxo-requisicao-jwt.canvas"},
+		{"id":"c_onb","type":"file","x":20,"y":-260,"width":280,"height":60,"color":"6","file":"canvas/fluxo-onboarding.canvas"},
+		{"id":"c_rec","type":"file","x":20,"y":-180,"width":280,"height":60,"color":"6","file":"canvas/fluxo-conta-receber.canvas"},
+		{"id":"c_pay","type":"file","x":340,"y":-420,"width":280,"height":60,"color":"6","file":"canvas/fluxo-conta-pagar.canvas"},
+		{"id":"c_dash","type":"file","x":340,"y":-340,"width":280,"height":60,"color":"6","file":"canvas/fluxo-dashboard.canvas"},
+		{"id":"c_mt","type":"file","x":720,"y":-420,"width":280,"height":60,"color":"3","file":"canvas/multi-tenant-isolamento.canvas"},
+		{"id":"c_status","type":"file","x":720,"y":-340,"width":280,"height":60,"color":"3","file":"canvas/status-contas-estados.canvas"},
+		{"id":"c_schema","type":"file","x":720,"y":-260,"width":280,"height":60,"color":"3","file":"canvas/schema-banco.canvas"},
+		{"id":"c_flyway","type":"file","x":720,"y":-180,"width":280,"height":60,"color":"3","file":"canvas/fluxo-flyway.canvas"},
+		{"id":"doc_readme","type":"file","x":-200,"y":40,"width":240,"height":50,"file":"README.md"},
+		{"id":"doc_regras","type":"file","x":60,"y":40,"width":240,"height":50,"file":"04-regras-negocio/indice-regras.md"},
+		{"id":"doc_fluxos","type":"file","x":320,"y":40,"width":240,"height":50,"file":"05-fluxos/indice-fluxos.md"},
+		{"id":"doc_api","type":"file","x":580,"y":40,"width":240,"height":50,"file":"06-api/indice-api.md"}
+	],
+	"edges":[]
+}

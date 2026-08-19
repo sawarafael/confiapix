@@ -1,0 +1,46 @@
+<section class="page">
+  <div class="page__header">
+    <h2>Transações PIX</h2>
+  </div>
+
+  @if (loading()) {
+    <p class="muted">Carregando...</p>
+  } @else if (error()) {
+    <div class="alert">{{ error() }}</div>
+  } @else {
+    <article class="card table-card table-card--wide">
+      <table>
+        <thead>
+          <tr>
+            <th>TXID</th>
+            <th>Banco</th>
+            <th>Pagador</th>
+            <th>Valor</th>
+            <th>Recebido em</th>
+            <th>Origem</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (pix of items(); track pix.id) {
+            <tr class="clickable-row">
+              <td class="mono">{{ pix.txid }}</td>
+              <td><span class="badge">{{ formatProvider(pix.provider) }}</span></td>
+              <td>{{ pix.payerName ?? '—' }}</td>
+              <td>R$ {{ pix.amount | number: '1.2-2' }}</td>
+              <td>{{ pix.receivedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+              <td><span class="badge">{{ formatSource(pix.source) }}</span></td>
+              <td>
+                <a class="btn btn--ghost btn--sm" [routerLink]="['/pix', pix.id]">Detalhar</a>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="empty">Nenhuma transação PIX encontrada.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </article>
+  }
+</section>

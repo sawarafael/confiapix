@@ -1,0 +1,31 @@
+{
+	"nodes":[
+		{"id":"fr_title","type":"text","x":-80,"y":-520,"width":560,"height":60,"color":"4","text":"# Fluxo de Requisição Autenticada\n\nPipeline JWT → TenantContext → Service → Repository"},
+		{"id":"fr_client","type":"text","x":160,"y":-400,"width":120,"height":50,"color":"6","text":"**Cliente**"},
+		{"id":"fr_sec","type":"text","x":160,"y":-310,"width":120,"height":50,"text":"**SecurityFilterChain**"},
+		{"id":"fr_jwt","type":"text","x":160,"y":-220,"width":120,"height":60,"color":"5","text":"**JwtAuthFilter**"},
+		{"id":"fr_check","type":"text","x":160,"y":-120,"width":120,"height":60,"color":"2","text":"Bearer\ntoken?"},
+		{"id":"fr_public","type":"text","x":360,"y":-120,"width":140,"height":50,"text":"Endpoint\npúblico"},
+		{"id":"fr_valid","type":"text","x":160,"y":-10,"width":120,"height":50,"color":"5","text":"Validar JWT"},
+		{"id":"fr_ctx","type":"text","x":160,"y":80,"width":120,"height":60,"color":"5","text":"**TenantContext**\n.set()"},
+		{"id":"fr_ctrl","type":"text","x":160,"y":170,"width":120,"height":50,"text":"**Controller**"},
+		{"id":"fr_svc","type":"text","x":160,"y":260,"width":120,"height":50,"text":"**Service**"},
+		{"id":"fr_repo","type":"text","x":160,"y":350,"width":120,"height":50,"text":"**Repository**"},
+		{"id":"fr_resp","type":"text","x":160,"y":440,"width":120,"height":50,"color":"4","text":"**ApiResponse**"},
+		{"id":"fr_clear","type":"text","x":-40,"y":80,"width":160,"height":60,"color":"2","text":"finally:\nTenantContext.clear()"},
+		{"id":"doc_fr","type":"file","x":360,"y":260,"width":280,"height":50,"file":"05-fluxos/requisicao-autenticada.md"}
+	],
+	"edges":[
+		{"id":"fr_e1","fromNode":"fr_client","fromSide":"bottom","toNode":"fr_sec","toSide":"top"},
+		{"id":"fr_e2","fromNode":"fr_sec","fromSide":"bottom","toNode":"fr_jwt","toSide":"top"},
+		{"id":"fr_e3","fromNode":"fr_jwt","fromSide":"bottom","toNode":"fr_check","toSide":"top"},
+		{"id":"fr_e4","fromNode":"fr_check","fromSide":"right","toNode":"fr_public","toSide":"left","label":"não"},
+		{"id":"fr_e5","fromNode":"fr_check","fromSide":"bottom","toNode":"fr_valid","toSide":"top","label":"sim"},
+		{"id":"fr_e6","fromNode":"fr_valid","fromSide":"bottom","toNode":"fr_ctx","toSide":"top"},
+		{"id":"fr_e7","fromNode":"fr_ctx","fromSide":"bottom","toNode":"fr_ctrl","toSide":"top"},
+		{"id":"fr_e8","fromNode":"fr_ctrl","fromSide":"bottom","toNode":"fr_svc","toSide":"top"},
+		{"id":"fr_e9","fromNode":"fr_svc","fromSide":"bottom","toNode":"fr_repo","toSide":"top"},
+		{"id":"fr_e10","fromNode":"fr_repo","fromSide":"bottom","toNode":"fr_resp","toSide":"top"},
+		{"id":"fr_e11","fromNode":"fr_jwt","fromSide":"left","toNode":"fr_clear","toSide":"right","label":"finally"}
+	]
+}

@@ -1,0 +1,37 @@
+{
+	"nodes":[
+		{"id":"fa_grp_reg","type":"group","x":-480,"y":-400,"width":420,"height":545,"color":"5","label":"POST /auth/register"},
+		{"id":"fa_grp_login","type":"group","x":80,"y":-400,"width":420,"height":480,"color":"6","label":"POST /auth/login"},
+		{"id":"fa_title","type":"text","text":"# Fluxo de Autenticação\n\nRegistro cria Tenant + User. Login retorna JWT.","x":-60,"y":-500,"width":520,"height":60,"color":"4"},
+		{"id":"fa_reg_start","type":"text","text":"Request\nRegisterRequest","x":-440,"y":-360,"width":160,"height":50},
+		{"id":"fa_reg_email","type":"text","text":"E-mail\njá existe?","x":-440,"y":-280,"width":160,"height":60,"color":"2"},
+		{"id":"fa_reg_err","type":"text","text":"400\nE-mail cadastrado","x":-240,"y":-280,"width":140,"height":50,"color":"1"},
+		{"id":"fa_reg_tenant","type":"text","text":"Criar Tenant\nplan=FREE","x":-440,"y":-180,"width":160,"height":50},
+		{"id":"fa_reg_user","type":"text","text":"Criar User\nBCrypt","x":-440,"y":-100,"width":160,"height":50},
+		{"id":"fa_reg_jwt","type":"text","text":"Gerar JWT","x":-440,"y":-20,"width":160,"height":50,"color":"4"},
+		{"id":"fa_reg_ok","type":"text","text":"201 AuthResponse","x":-440,"y":60,"width":160,"height":50,"color":"4"},
+		{"id":"fa_log_start","type":"text","text":"Request\nLoginRequest","x":120,"y":-360,"width":160,"height":50},
+		{"id":"fa_log_auth","type":"text","text":"AuthenticationManager\n.authenticate()","x":120,"y":-280,"width":160,"height":60},
+		{"id":"fa_log_err","type":"text","text":"401\nCredenciais inválidas","x":320,"y":-280,"width":140,"height":50,"color":"1"},
+		{"id":"fa_log_active","type":"text","text":"User\nactive?","x":120,"y":-180,"width":160,"height":60,"color":"2"},
+		{"id":"fa_log_inact","type":"text","text":"400\nInativo","x":320,"y":-180,"width":140,"height":50,"color":"1"},
+		{"id":"fa_log_jwt","type":"text","text":"Gerar JWT","x":120,"y":-80,"width":160,"height":50,"color":"4"},
+		{"id":"fa_log_ok","type":"text","text":"200 AuthResponse","x":120,"y":0,"width":160,"height":50,"color":"4"},
+		{"id":"doc_auth","type":"file","file":"04-regras-negocio/autenticacao.md","x":120,"y":120,"width":240,"height":50},
+		{"id":"doc_api","type":"file","file":"06-api/auth.md","x":120,"y":190,"width":240,"height":50}
+	],
+	"edges":[
+		{"id":"fa_e1","fromNode":"fa_reg_start","fromSide":"bottom","toNode":"fa_reg_email","toSide":"top"},
+		{"id":"fa_e2","fromNode":"fa_reg_email","fromSide":"right","toNode":"fa_reg_err","toSide":"left","label":"sim"},
+		{"id":"fa_e3","fromNode":"fa_reg_email","fromSide":"bottom","toNode":"fa_reg_tenant","toSide":"top","label":"não"},
+		{"id":"fa_e4","fromNode":"fa_reg_tenant","fromSide":"bottom","toNode":"fa_reg_user","toSide":"top"},
+		{"id":"fa_e5","fromNode":"fa_reg_user","fromSide":"bottom","toNode":"fa_reg_jwt","toSide":"top"},
+		{"id":"fa_e6","fromNode":"fa_reg_jwt","fromSide":"bottom","toNode":"fa_reg_ok","toSide":"top"},
+		{"id":"fa_e7","fromNode":"fa_log_start","fromSide":"bottom","toNode":"fa_log_auth","toSide":"top"},
+		{"id":"fa_e8","fromNode":"fa_log_auth","fromSide":"right","toNode":"fa_log_err","toSide":"left","label":"falha"},
+		{"id":"fa_e9","fromNode":"fa_log_auth","fromSide":"bottom","toNode":"fa_log_active","toSide":"top","label":"ok"},
+		{"id":"fa_e10","fromNode":"fa_log_active","fromSide":"right","toNode":"fa_log_inact","toSide":"left","label":"não"},
+		{"id":"fa_e11","fromNode":"fa_log_active","fromSide":"bottom","toNode":"fa_log_jwt","toSide":"top","label":"sim"},
+		{"id":"fa_e12","fromNode":"fa_log_jwt","fromSide":"bottom","toNode":"fa_log_ok","toSide":"top"}
+	]
+}

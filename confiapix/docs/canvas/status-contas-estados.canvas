@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"st_title","type":"text","x":-20,"y":-400,"width":440,"height":60,"color":"4","text":"# Status de Contas\n\nEnum AccountStatus — receber e pagar."},
+		{"id":"st_pending","type":"text","x":140,"y":-260,"width":160,"height":70,"color":"3","text":"**PENDING**\nEm aberto\n(dentro do prazo)"},
+		{"id":"st_overdue","type":"text","x":-80,"y":-120,"width":160,"height":70,"color":"2","text":"**OVERDUE**\nVencido\n(dueDate < hoje)"},
+		{"id":"st_paid","type":"text","x":140,"y":20,"width":160,"height":70,"color":"4","text":"**PAID**\nQuitado\npaymentDate preenchido"},
+		{"id":"st_cancel","type":"text","x":360,"y":-120,"width":160,"height":70,"color":"1","text":"**CANCELED**\nCancelado\n(sem endpoint MVP)"},
+		{"id":"st_helper","type":"text","x":-320,"y":-120,"width":200,"height":120,"color":"5","text":"**AccountStatusHelper**\n\nPAID/CANCELED → mantém\nVencido → OVERDUE\nSenão → PENDING"},
+		{"id":"st_pay","type":"text","x":-80,"y":20,"width":160,"height":60,"color":"6","text":"**PATCH .../pay**\nBaixa manual"},
+		{"id":"doc_st","type":"file","x":360,"y":20,"width":260,"height":50,"file":"04-regras-negocio/status-contas.md"},
+		{"id":"doc_cr","type":"file","x":360,"y":90,"width":260,"height":50,"file":"04-regras-negocio/contas-receber.md"}
+	],
+	"edges":[
+		{"id":"st_e1","fromNode":"st_pending","fromSide":"left","toNode":"st_overdue","toSide":"right","label":"vence"},
+		{"id":"st_e2","fromNode":"st_helper","fromSide":"right","toNode":"st_overdue","toSide":"left","label":"calcula"},
+		{"id":"st_e3","fromNode":"st_pending","fromSide":"bottom","toNode":"st_paid","toSide":"top","label":"PATCH /pay"},
+		{"id":"st_e4","fromNode":"st_overdue","fromSide":"bottom","toNode":"st_paid","toSide":"left","label":"PATCH /pay"},
+		{"id":"st_e5","fromNode":"st_pay","fromSide":"top","toNode":"st_paid","toSide":"bottom"},
+		{"id":"st_e6","fromNode":"st_pending","fromSide":"right","toNode":"st_cancel","toSide":"left","label":"futuro","color":"1"}
+	]
+}

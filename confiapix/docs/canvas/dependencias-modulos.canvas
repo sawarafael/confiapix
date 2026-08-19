@@ -1,0 +1,29 @@
+{
+	"nodes":[
+		{"id":"dm_title","type":"text","x":80,"y":-400,"width":440,"height":60,"color":"4","text":"# Dependências entre Módulos\n\nDireção das dependências de código Java."},
+		{"id":"dm_auth","type":"text","x":-280,"y":-280,"width":120,"height":50,"text":"auth"},
+		{"id":"dm_tenant","type":"text","x":-80,"y":-280,"width":120,"height":50,"color":"5","text":"tenant"},
+		{"id":"dm_sec","type":"text","x":120,"y":-280,"width":120,"height":50,"text":"security"},
+		{"id":"dm_company","type":"text","x":-180,"y":-160,"width":120,"height":50,"text":"company"},
+		{"id":"dm_customer","type":"text","x":-80,"y":-40,"width":120,"height":50,"text":"customer"},
+		{"id":"dm_supplier","type":"text","x":80,"y":-40,"width":120,"height":50,"text":"supplier"},
+		{"id":"dm_receivable","type":"text","x":-180,"y":80,"width":120,"height":50,"color":"3","text":"receivable"},
+		{"id":"dm_payable","type":"text","x":20,"y":80,"width":120,"height":50,"color":"3","text":"payable"},
+		{"id":"dm_dashboard","type":"text","x":220,"y":80,"width":120,"height":50,"color":"1","text":"dashboard"},
+		{"id":"dm_common","type":"text","x":320,"y":-160,"width":120,"height":50,"color":"6","text":"common"},
+		{"id":"doc_mod","type":"file","x":320,"y":-40,"width":260,"height":50,"file":"02-arquitetura/estrutura-modular.md"}
+	],
+	"edges":[
+		{"id":"dm_e1","fromNode":"dm_auth","fromSide":"right","toNode":"dm_tenant","toSide":"left"},
+		{"id":"dm_e2","fromNode":"dm_auth","fromSide":"right","toNode":"dm_sec","toSide":"left"},
+		{"id":"dm_e3","fromNode":"dm_company","fromSide":"top","toNode":"dm_tenant","toSide":"bottom"},
+		{"id":"dm_e4","fromNode":"dm_customer","fromSide":"top","toNode":"dm_company","toSide":"bottom"},
+		{"id":"dm_e5","fromNode":"dm_supplier","fromSide":"top","toNode":"dm_company","toSide":"bottom"},
+		{"id":"dm_e6","fromNode":"dm_receivable","fromSide":"top","toNode":"dm_company","toSide":"bottom"},
+		{"id":"dm_e7","fromNode":"dm_receivable","fromSide":"top","toNode":"dm_customer","toSide":"bottom"},
+		{"id":"dm_e8","fromNode":"dm_payable","fromSide":"top","toNode":"dm_company","toSide":"bottom"},
+		{"id":"dm_e9","fromNode":"dm_payable","fromSide":"top","toNode":"dm_supplier","toSide":"bottom"},
+		{"id":"dm_e10","fromNode":"dm_dashboard","fromSide":"top","toNode":"dm_receivable","toSide":"bottom"},
+		{"id":"dm_e11","fromNode":"dm_dashboard","fromSide":"top","toNode":"dm_payable","toSide":"bottom"}
+	]
+}

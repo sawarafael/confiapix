@@ -1,0 +1,26 @@
+{
+	"nodes":[
+		{"id":"cr_title","type":"text","x":-60,"y":-480,"width":520,"height":60,"color":"4","text":"# Fluxo — Conta a Receber\n\nCiclo de vida completo do título."},
+		{"id":"cr_create","type":"text","x":140,"y":-360,"width":180,"height":55,"color":"5","text":"**POST /receivables**\nCriar título"},
+		{"id":"cr_val","type":"text","x":140,"y":-270,"width":180,"height":70,"color":"2","text":"Validar:\nCustomer ∈ Company\nCompany ∈ Tenant"},
+		{"id":"cr_status","type":"text","x":140,"y":-170,"width":180,"height":55,"text":"Calcular status\nAccountStatusHelper"},
+		{"id":"cr_open","type":"text","x":140,"y":-70,"width":180,"height":55,"color":"3","text":"PENDING / OVERDUE"},
+		{"id":"cr_update","type":"text","x":-80,"y":30,"width":160,"height":55,"text":"**PUT** (se ≠ PAID)"},
+		{"id":"cr_pay","type":"text","x":140,"y":30,"width":180,"height":55,"color":"4","text":"**PATCH /pay**\nBaixa"},
+		{"id":"cr_delete","type":"text","x":360,"y":30,"width":160,"height":55,"color":"1","text":"**DELETE**"},
+		{"id":"cr_paid","type":"text","x":140,"y":130,"width":180,"height":55,"color":"4","text":"**PAID**\npaymentDate = hoje"},
+		{"id":"cr_err_paid","type":"text","x":360,"y":130,"width":180,"height":55,"color":"1","text":"400 se já PAID\nou CANCELED"},
+		{"id":"doc_cr","type":"file","x":140,"y":230,"width":260,"height":50,"file":"05-fluxos/conta-receber.md"},
+		{"id":"doc_api","type":"file","x":140,"y":300,"width":260,"height":50,"file":"06-api/receivables.md"}
+	],
+	"edges":[
+		{"id":"cr_e1","fromNode":"cr_create","fromSide":"bottom","toNode":"cr_val","toSide":"top"},
+		{"id":"cr_e2","fromNode":"cr_val","fromSide":"bottom","toNode":"cr_status","toSide":"top"},
+		{"id":"cr_e3","fromNode":"cr_status","fromSide":"bottom","toNode":"cr_open","toSide":"top"},
+		{"id":"cr_e4","fromNode":"cr_open","fromSide":"left","toNode":"cr_update","toSide":"right"},
+		{"id":"cr_e5","fromNode":"cr_open","fromSide":"bottom","toNode":"cr_pay","toSide":"top"},
+		{"id":"cr_e6","fromNode":"cr_open","fromSide":"right","toNode":"cr_delete","toSide":"left"},
+		{"id":"cr_e7","fromNode":"cr_pay","fromSide":"bottom","toNode":"cr_paid","toSide":"top"},
+		{"id":"cr_e8","fromNode":"cr_pay","fromSide":"right","toNode":"cr_err_paid","toSide":"left","label":"inválido"}
+	]
+}

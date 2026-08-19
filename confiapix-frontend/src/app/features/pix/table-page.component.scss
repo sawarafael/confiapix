@@ -1,0 +1,98 @@
+.page__header h2 {
+  margin: 0;
+  font-size: clamp(1.15rem, 3.5vw, 1.35rem);
+  font-weight: 700;
+}
+
+.table-card {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+  th,
+  td {
+    padding: 0.7rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .mono {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mono {
+  font-family: ui-monospace, monospace;
+  font-size: 0.82rem;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem !important;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge--matched {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge--pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.badge--mismatch,
+.badge--divergent {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge--manual {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.btn--sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+  min-height: auto;
+}
+
+.clickable-row:hover {
+  background: rgba(59, 130, 246, 0.04);
+}

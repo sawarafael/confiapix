@@ -1,0 +1,76 @@
+<section class="page integration-detail">
+  <div class="page__header integration-detail__header">
+    <div>
+      <a routerLink="/integrations" class="back-link">
+        <span class="material-symbols-outlined">arrow_back</span>
+        Integrações
+      </a>
+      <div class="integration-detail__title-row">
+        <span class="integration-detail__badge material-symbols-outlined">
+          {{ catalogItem()?.provider === 'STONE' ? 'payments' : 'account_balance' }}
+        </span>
+        <div>
+          <h2>{{ providerTitle() }}</h2>
+          @if (catalogItem()?.compe) {
+            <p class="muted integration-detail__meta">
+              COMPE {{ catalogItem()?.compe }} · ISPB {{ catalogItem()?.ispb }}
+            </p>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="muted">Carregando...</p>
+  } @else {
+    @if (error()) {
+      <div class="alert">{{ error() }}</div>
+    }
+    @if (success()) {
+      <div class="alert alert--success">{{ success() }}</div>
+    }
+    @if (reserveNotice(); as notice) {
+      <div class="alert alert--info">
+        <span class="material-symbols-outlined">info</span>
+        <span>{{ notice }}</span>
+      </div>
+    }
+
+    <article class="card integration-detail__card">
+      <app-dynamic-credential-form
+        [form]="form"
+        [fields]="credentialFields()"
+        [secretOptionalHint]="configured()"
+      />
+
+      <footer class="integration-detail__actions">
+        <div class="integration-detail__actions-primary">
+          <button class="btn btn--primary" type="button" (click)="save()" [disabled]="saving()">
+            {{ saving() ? 'Salvando...' : 'Salvar e ativar' }}
+          </button>
+          @if (supportsConnectionTest()) {
+            <button class="btn btn--ghost" type="button" (click)="testConnection()" [disabled]="testing()">
+              {{ testing() ? 'Testando...' : 'Testar conexão' }}
+            </button>
+          }
+          @if (supportsSync() && configured()) {
+            <button class="btn btn--ghost" type="button" (click)="syncPix()" [disabled]="syncing()">
+              {{ syncing() ? 'Sincronizando...' : 'Sincronizar PIX' }}
+            </button>
+          }
+        </div>
+        @if (configured()) {
+          <button
+            class="btn btn--ghost btn--danger"
+            type="button"
+            (click)="removeIntegration()"
+            [disabled]="removing()"
+          >
+            {{ removing() ? 'Removendo...' : 'Remover integração' }}
+          </button>
+        }
+      </footer>
+    </article>
+  }
+</section>

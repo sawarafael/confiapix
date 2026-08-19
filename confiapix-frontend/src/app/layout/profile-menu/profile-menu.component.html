@@ -1,0 +1,39 @@
+<div class="profile-menu">
+  <button
+    type="button"
+    class="profile-menu__trigger"
+    aria-label="Menu do perfil"
+    [attr.aria-expanded]="open()"
+    (click)="toggle()"
+  >
+    <span class="profile-menu__avatar">{{ auth.displayName().charAt(0) }}</span>
+  </button>
+
+  @if (open()) {
+    <div class="profile-menu__panel" role="menu" aria-label="Menu do perfil">
+      <div class="profile-menu__header">
+        <span class="profile-menu__avatar profile-menu__avatar--lg">{{ auth.displayName().charAt(0) }}</span>
+        <div class="profile-menu__info">
+          <strong>{{ auth.displayName() }}</strong>
+          <span>{{ auth.user()?.email }}</span>
+          <small>{{ formatRole(auth.user()?.role) }}</small>
+        </div>
+      </div>
+
+      <div class="profile-menu__actions">
+        <button type="button" class="profile-menu__item" role="menuitem" (click)="openProfile()">
+          <span class="material-symbols-outlined">person</span>
+          Meu perfil
+        </button>
+        <button type="button" class="profile-menu__item" role="menuitem" (click)="upgradePlan()">
+          <span class="material-symbols-outlined">upgrade</span>
+          Atualizar plano
+        </button>
+        <button type="button" class="profile-menu__item profile-menu__item--danger" role="menuitem" (click)="logout()">
+          <span class="material-symbols-outlined">logout</span>
+          Sair
+        </button>
+      </div>
+    </div>
+  }
+</div>

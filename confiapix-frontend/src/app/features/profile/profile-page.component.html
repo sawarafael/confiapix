@@ -1,0 +1,90 @@
+<section class="page">
+  <div class="page__header">
+    <h2>Meu perfil</h2>
+    <p>Gerencie seus dados pessoais e credenciais de acesso.</p>
+  </div>
+
+  @if (loading()) {
+    <article class="card">
+      <p class="muted">Carregando perfil...</p>
+    </article>
+  } @else {
+    <div class="profile-grid">
+      <article class="card form-card">
+        <h3>Dados pessoais</h3>
+
+        @if (profileError()) {
+          <p class="alert alert--error">{{ profileError() }}</p>
+        }
+        @if (profileSuccess()) {
+          <p class="alert alert--success">{{ profileSuccess() }}</p>
+        }
+
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+          <div class="form-grid">
+            <label>
+              Nome
+              <input type="text" formControlName="name" autocomplete="name" />
+            </label>
+            <label>
+              E-mail
+              <input type="email" formControlName="email" autocomplete="email" />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn--primary" [disabled]="savingProfile()">
+              {{ savingProfile() ? 'Salvando...' : 'Salvar alterações' }}
+            </button>
+          </div>
+        </form>
+      </article>
+
+      <article class="card">
+        <h3>Organização</h3>
+        <dl class="info-list">
+          <div><dt>Empresa</dt><dd>{{ profile()?.tenantName }}</dd></div>
+          <div><dt>Plano</dt><dd>{{ formatPlan(profile()?.plan) }}</dd></div>
+          <div><dt>Perfil de acesso</dt><dd>{{ formatRole(profile()?.role) }}</dd></div>
+          <div><dt>Status</dt><dd>{{ profile()?.active ? 'Ativo' : 'Inativo' }}</dd></div>
+          <div><dt>ID da organização</dt><dd class="mono">{{ profile()?.tenantId }}</dd></div>
+        </dl>
+      </article>
+
+      <article class="card form-card">
+        <h3>Alterar senha</h3>
+
+        @if (passwordError()) {
+          <p class="alert alert--error">{{ passwordError() }}</p>
+        }
+        @if (passwordSuccess()) {
+          <p class="alert alert--success">{{ passwordSuccess() }}</p>
+        }
+
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+          <label>
+            Senha atual
+            <input type="password" formControlName="currentPassword" autocomplete="current-password" />
+          </label>
+          <div class="form-grid">
+            <label>
+              Nova senha
+              <input type="password" formControlName="newPassword" autocomplete="new-password" />
+              <small>Mínimo de 6 caracteres</small>
+            </label>
+            <label>
+              Confirmar nova senha
+              <input type="password" formControlName="confirmPassword" autocomplete="new-password" />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn--primary" [disabled]="savingPassword()">
+              {{ savingPassword() ? 'Alterando...' : 'Alterar senha' }}
+            </button>
+          </div>
+        </form>
+      </article>
+    </div>
+  }
+</section>

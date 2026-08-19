@@ -1,0 +1,122 @@
+<section class="page">
+
+  <div class="page__header">
+
+    <h2>Integração Stone</h2>
+
+  </div>
+
+
+
+  @if (loading()) {
+
+    <p class="muted">Carregando...</p>
+
+  } @else {
+
+    @if (error()) {
+
+      <div class="alert">{{ error() }}</div>
+
+    }
+
+    @if (success()) {
+
+      <div class="alert alert--success">{{ success() }}</div>
+
+    }
+
+
+
+    <article class="card form-card">
+
+      <form [formGroup]="form" (ngSubmit)="save()">
+
+        <div class="form-grid">
+
+          <label>
+
+            Modo de autenticação
+
+            <select formControlName="authMode">
+
+              <option value="API_KEY">Chave API (SecretKey sk_...)</option>
+
+              <option value="OPEN_BANKING">Open Banking (OAuth)</option>
+
+            </select>
+
+          </label>
+
+          <label>
+
+            Modelo de negócio
+
+            <select formControlName="businessModel">
+
+              <option value="GATEWAY">Gateway</option>
+
+              <option value="SUBACQUIRER">Subadquirente</option>
+
+            </select>
+
+          </label>
+
+          <label>
+
+            Chave secreta
+
+            <input type="password" formControlName="clientSecret" placeholder="sk_..." />
+
+            @if (credentials()) {
+
+              <small>Chave já cadastrada — deixe em branco para manter</small>
+
+            }
+
+          </label>
+
+          <label>
+
+            ID da conta
+
+            <input type="text" formControlName="accountId" placeholder="194047458" />
+
+          </label>
+
+          <label>
+
+            ID do comerciante
+
+            <input type="text" formControlName="merchantId" placeholder="Opcional" />
+
+          </label>
+
+        </div>
+
+
+
+        <div class="actions">
+
+          <button class="btn btn--primary" type="submit" [disabled]="saving()">
+
+            {{ saving() ? 'Salvando...' : 'Salvar credenciais' }}
+
+          </button>
+
+          <button class="btn btn--ghost" type="button" (click)="testConnection()" [disabled]="testing()">
+
+            {{ testing() ? 'Testando...' : 'Testar conexão' }}
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </article>
+
+  }
+
+</section>
+

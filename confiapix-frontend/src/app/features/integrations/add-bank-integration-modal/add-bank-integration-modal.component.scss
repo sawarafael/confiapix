@@ -1,0 +1,330 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(2, 6, 23, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  position: fixed;
+  z-index: 2001;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(720px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 0.75rem;
+}
+
+.modal__header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.modal__header p {
+  margin: 0.35rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.modal__close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: var(--input-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.modal__body {
+  padding: 0 1.5rem 1rem;
+  overflow-y: auto;
+}
+
+.modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.modal__footer-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.wizard-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.5rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.wizard-steps li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.wizard-steps li span {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.wizard-steps__item--active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.wizard-steps__item--active span,
+.wizard-steps__item--done span {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.35);
+  color: var(--primary);
+}
+
+.step-intro {
+  margin: 0 0 1rem;
+  color: var(--text-secondary);
+}
+
+.bank-picker {
+  display: grid;
+  gap: 0.75rem;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.bank-search {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 0.85rem;
+}
+
+.bank-search__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding-left: 0.35rem;
+}
+
+.bank-search__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.bank-search__icon {
+  position: absolute;
+  left: 1.1rem;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.bank-search__control input {
+  width: 100%;
+  margin: 0;
+  min-height: 3.35rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.95rem 1.35rem 0.95rem 3rem;
+  font: inherit;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  background: rgba(148, 163, 184, 0.1);
+  color: var(--text-primary);
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+body.dark-mode .bank-search__control input {
+  background: rgba(15, 23, 42, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.bank-search__control input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+
+.bank-search__control input:hover {
+  background: rgba(148, 163, 184, 0.14);
+  border-color: rgba(59, 130, 246, 0.18);
+}
+
+body.dark-mode .bank-search__control input:hover {
+  background: rgba(30, 41, 59, 0.9);
+}
+
+.bank-search__control input:focus {
+  outline: none;
+  background: var(--input-bg);
+  border-color: rgba(59, 130, 246, 0.45);
+  box-shadow:
+    0 0 0 5px rgba(59, 130, 246, 0.1),
+    inset 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.bank-search__control input::-webkit-search-cancel-button {
+  margin-right: 0.15rem;
+}
+
+.bank-search__count {
+  margin: 0 0 0.85rem;
+  padding-left: 0.35rem;
+  font-size: 0.78rem;
+}
+
+.bank-picker__item {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--input-bg);
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 0.85rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bank-picker__item strong {
+  grid-column: 2;
+  color: var(--text-primary);
+}
+
+.bank-picker__item > span:not(.bank-picker__icon) {
+  grid-column: 2;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.bank-picker__item--selected {
+  border-color: rgba(59, 130, 246, 0.55);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.bank-picker__icon {
+  grid-row: 1 / span 3;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--primary);
+}
+
+.bank-picker__features {
+  grid-column: 2;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.bank-picker__features li {
+  font-size: 0.72rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary);
+}
+
+.review h3 {
+  margin: 0 0 0.85rem;
+}
+
+.review dl {
+  margin: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.review dl div {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0.75rem;
+}
+
+.review dt {
+  color: var(--text-muted);
+}
+
+.review dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.review__hint {
+  margin: 1rem 0 0;
+}
+
+@media (max-width: 640px) {
+  .wizard-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .credentials-form .form-grid,
+  .review dl div {
+    grid-template-columns: 1fr;
+  }
+
+  .modal__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal__footer-actions {
+    width: 100%;
+  }
+
+  .modal__footer-actions .btn {
+    flex: 1;
+  }
+
+  .bank-search__control input {
+    min-height: 3.5rem;
+    font-size: 16px;
+  }
+}

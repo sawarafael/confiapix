@@ -1,0 +1,174 @@
+================================================================================
+  GUIA RÁPIDO — COMO PEGAR OS DADOS DA STONE PARA O CONFIAPIX
+  (para enviar / imprimir / seguir no celular)
+================================================================================
+
+Este guia explica como pegar as informações da sua conta Stone
+para conectar no sistema ConfiaPix.
+
+No final, anote estes 4 dados e me envie (com cuidado — a chave é secreta):
+
+  1) Nome do estabelecimento
+  2) Stonecode
+  3) Account ID (número da conta na API)
+  4) Secret Key (sk_...) — NÃO compartilhar em grupos ou redes sociais
+
+
+================================================================================
+PARTE 1 — ENTRAR NA CONTA STONE
+================================================================================
+
+1. Abra o navegador e acesse: https://conta.stone.com.br
+
+2. Entre com seu e-mail e senha da Stone.
+   (É o login da CONTA STONE — não é outro site.)
+
+
+================================================================================
+PARTE 2 — PEGAR O STONECODE
+================================================================================
+
+1. No canto superior direito, clique no NOME DO SEU ESTABELECIMENTO.
+
+2. Clique em "Meu perfil".
+
+3. Clique em "Taxas e Tarifas".
+
+4. Clique em "Taxas de vendas".
+
+5. Anote o STONECODE que aparece abaixo do nome.
+
+   Stonecode: _________________________________
+
+
+================================================================================
+PARTE 3 — PEGAR OU CRIAR A SECRET KEY (sk_...)
+================================================================================
+
+1. No menu, vá em "Perfil".
+
+2. Procure "Chaves de Autenticação" (ou Configurações > Chaves).
+
+3. Se JÁ EXISTIR uma chave:
+   - Se aparecer só mascarada (••••), NÃO dá para copiar de novo.
+   - Nesse caso, crie uma chave NOVA (passo 4).
+
+4. Para CRIAR uma chave nova:
+   a) Clique em "Criar Chave"
+   b) Nome sugerido: ConfiaPix
+   c) Tipo: escolha E-COMMERCE / INTEGRAÇÃO / PAGAMENTOS ONLINE
+      (NÃO escolha TEF — TEF é só para maquininha no caixa)
+   d) Confirme com seu PIN (6 dígitos, mesmo do PIX)
+   e) COPIE A CHAVE NA HORA — ela só aparece UMA VEZ!
+      Começa com sk_...
+
+   Secret Key: sk_________________________________
+
+
+================================================================================
+PARTE 4 — CONFIRMAR O ACCOUNT ID
+================================================================================
+
+O Account ID é um número que identifica sua conta na integração.
+Exemplo: 194047458
+
+1. Veja se aparece em Perfil, Dados da conta ou Configurações.
+
+2. Se NÃO encontrar, anote o Stonecode e peça confirmação à Stone
+   (telefone ou e-mail na Parte 6).
+
+   Account ID: _________________________________
+
+
+================================================================================
+PARTE 5 — TENTAR O PAGAR.ME
+================================================================================
+
+Algumas contas usam outro painel chamado Pagar.me. Vale tentar:
+
+1. Acesse: https://id.pagar.me/signin
+
+2. Use seu e-mail da Stone e a senha (pode ser DIFERENTE da conta Stone).
+
+3. Se der "E-mail ou senha inválidos":
+   → NORMAL. Muita gente só tem conta.stone.com.br e não tem Pagar.me.
+   → Pule para a Parte 6 (ligar para Stone).
+
+4. Se ENTRAR:
+   a) Anote o Account ID que aparece no topo
+   b) Vá em Configurações > Chaves
+   c) Copie a Secret Key (sk_...)
+
+
+================================================================================
+PARTE 6 — SE FALTAR ALGO, LIGAR / ESCREVER PARA A STONE
+================================================================================
+
+Ligue se já for cliente Stone: 3004-9680
+E-mail integração/parceiros: aloparceiro@stone.com.br
+
+Pode ler ou copiar esta mensagem:
+
+----------------------------------------------------------------------
+Olá, sou cliente Stone.
+
+Estabelecimento: _________________________________
+Stonecode: _________________________________
+E-mail cadastrado: _________________________________
+
+Preciso integrar um sistema de conciliação (ConfiaPix) e preciso:
+
+1. Confirmar meu Account ID para API / webhook
+2. Confirmar se minha Secret Key (sk_...) serve para integração online
+3. Saber se minha conta é Subadquirente (lojista) ou Gateway
+4. (Opcional) Liberar acesso ao dashboard Pagar.me
+5. (Opcional) Cadastrar webhook para PIX recebido automaticamente
+
+Obrigada!
+----------------------------------------------------------------------
+
+
+================================================================================
+PARTE 7 — O QUE ME ENVIAR DE VOLTA
+================================================================================
+
+Preencha e me mande (preferência: mensagem privada, não em grupo):
+
+  Nome do estabelecimento: _________________________________
+  Stonecode:               _________________________________
+  Account ID:              _________________________________
+  Secret Key (sk_...):     _________________________________
+  Tipo da chave criada:    [ ] E-commerce  [ ] TEF  [ ] Outro: _______
+  Conseguiu Pagar.me?      [ ] Sim  [ ] Não — deu erro de login
+  Ligou para Stone?        [ ] Sim  [ ] Ainda não
+
+
+================================================================================
+CHECKLIST RÁPIDO
+================================================================================
+
+[ ] Entrei em conta.stone.com.br
+[ ] Anotei o Stonecode
+[ ] Vi ou criei Chave de Autenticação (sk_...)
+[ ] Anotei o Account ID
+[ ] Tentei id.pagar.me (funcionou ou não)
+[ ] Liguei para Stone se faltou algo
+[ ] Enviei os dados com segurança (mensagem privada)
+
+
+================================================================================
+DICAS FINAIS
+================================================================================
+
+- Conta Stone (conta.stone.com.br) e Pagar.me (id.pagar.me) são logins
+  DIFERENTES. Não usar a mesma senha em todo lugar não significa erro.
+
+- Se a chave for de PRODUÇÃO (sk_ sem "test" no meio), avise — o sistema
+  precisa de configuração diferente de sandbox.
+
+- Mesmo se a Stone demorar a responder, o ConfiaPix pode ser testado
+  simulando um PIX — eu configuro isso do meu lado.
+
+Qualquer dúvida, me chama!
+
+================================================================================
