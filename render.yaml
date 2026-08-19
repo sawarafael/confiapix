@@ -45,5 +45,5 @@ services:
   - type: web
     name: confiapix-website
     runtime: static
-    rootDir: confiapix-website
-    staticPublishPath: .
+    buildCommand: "true"
+    staticPublishPath: ./confiapix-website
